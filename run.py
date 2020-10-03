@@ -29,7 +29,7 @@ def login():
 	                                password = password):
 		token = get_a_token()
 		redis_db.set(token, email)
-		return jsonify({'message': 'Password is correct',
+		return jsonify({'name': user['name'],
 		                'token': token})
 	# might return a token that verifies the user in the future
 	return jsonify({'error': 'Email or password is incorrect'}), 401
@@ -46,7 +46,7 @@ def register():
 		redis_db.set(token, email)
 	except Exception as e:
 		return jsonify({'error': str(e)}), 500
-	return jsonify({'message': 'User registered successfully',
+	return jsonify({'message': 'User registered successfully!',
 	                'token': token}), 201
 	
 	

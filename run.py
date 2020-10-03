@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import User
@@ -18,6 +19,7 @@ def get_a_token(length = 15):
 
 
 myapp = Flask(__name__)
+CORS(myapp)
 
 
 @myapp.route("/login", methods = ["POST"])

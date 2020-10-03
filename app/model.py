@@ -1,8 +1,7 @@
-import redis
+from pymongo import MongoClient
 
-redis_db = redis.Redis( host = "localhost",
-                        port = 6379,
-                        db   = 0)
+client = MongoClient()
+db = client["login-demo"].users
 
 
 class User:
@@ -12,8 +11,10 @@ class User:
 		self.password = password
 		
 	def save( self ):
-		redis_db.set(self.email, self.password)
+		db.insert_one({'name': self.name,
+		               'email': self.email,
+		               'password': self.password})
 	
 	@staticmethod
-	def find_by_mail( email ) -> bytes:
-		return redis_db.get(email)
+	def find_by_mail( email ):
+		return db.find_one({'email': email})

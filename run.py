@@ -25,8 +25,7 @@ def login():
 	email = request.form.get("email")
 	password = request.form.get("password")
 	user = User.find_by_mail(email)
-	pwhash = user['password']
-	if user and check_password_hash(pwhash = pwhash,
+	if user and check_password_hash(pwhash = user['password'],
 	                                password = password):
 		token = get_a_token()
 		redis_db.set(token, email)
@@ -52,4 +51,4 @@ def register():
 	
 	
 if __name__ == "__main__":
-	myapp.run(port = 80)
+	myapp.run(host = '0.0.0.0', port = 80)
